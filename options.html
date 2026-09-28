@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Strudel Session Sync — Options</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    input { width: 100%; box-sizing: border-box; padding: .5rem; margin-top: .25rem; border: 1px solid #bbb; border-radius: 6px; }
+    .hint { font-size: .85rem; color: #666; margin-top: .3rem; }
+    button { margin-top: 1.5rem; padding: .6rem 1.4rem; font-size: 1rem; border: 0; border-radius: 8px; background: #1b5e20; color: #fff; cursor: pointer; }
+    #status { margin-top: 1rem; font-size: .9rem; }
+    pre { background: #f4f4f4; padding: .8rem; border-radius: 8px; overflow-x: auto; font-size: .78rem; line-height: 1.4; }
+    details { margin-top: 1.5rem; }
+    .ok { color: #1b5e20; } .err { color: #b71c1c; }
+  </style>
+</head>
+<body>
+  <h1>Strudel Session Sync</h1>
+  <p>Backs up every strudel.cc session to <em>your own</em> Supabase project as versioned history:
+  each save inserts a new row, except that a session written again within 5 minutes updates its
+  latest row in place. Session name comes from the first <code>// "Title"</code> comment in the
+  code, author from <code>// @author Name</code> (both optional — falls back to pattern id / your
+  backup ID).</p>
+
+  <label>Supabase project URL</label>
+  <input id="url" placeholder="https://YOURPROJECT.supabase.co" />
+  <div class="hint">Dashboard → Settings → API → Project URL</div>
+
+  <label>Anon (public) key</label>
+  <input id="key" type="password" placeholder="eyJhbGciOi..." />
+  <div class="hint">Settings → API → anon public key. Never use the service_role key here.</div>
+
+  <label>Backup ID (unique to you)</label>
+  <input id="uid" placeholder="e.g. your email" />
+  <div class="hint">Acts as the default author and scopes the session browser to your rows.</div>
+
+  <label>Table name</label>
+  <input id="table" placeholder="strudel_sessions" />
+
+  <button id="save">Save</button>
+  <div id="status"></div>
+
+  <details>
+    <summary>One-time Supabase setup (run once in the SQL editor)</summary>
+    <pre>create table if not exists public.strudel_sessions (
+  id bigint generated always as identity primary key,
+  session_name text not null,
+  author text not null,
+  pattern_id text,
+  data text not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists strudel_sessions_lookup
+  on public.strudel_sessions (session_name, author, created_at desc);
+
+alter table public.strudel_sessions enable row level security;
+
+-- anon may only touch this one backup table. Do NOT reuse this project
+-- for other sensitive data - the anon key ships inside the extension.
+create policy "anon all on strudel_sessions"
+  on public.strudel_sessions for all
+  to anon using (true) with check (true);
+
+-- latest row per (session_name, author) - powers the extension's session browser
+create or replace view public.latest_strudel_sessions as
+select distinct on (session_name, author) *
+from public.strudel_sessions
+order by session_name, author, created_at desc;</pre>
+  </details>
+
+  <script src="options.js"></script>
+</body>
+</html>

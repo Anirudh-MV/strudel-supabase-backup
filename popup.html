@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Strudel Session Sync</title>
+  <style>
+    body { font-family: system-ui, sans-serif; width: 280px; padding: .8rem; color: #222; }
+    h1 { font-size: 1rem; margin: 0 0 .6rem; }
+    #status { font-size: .85rem; margin: .5rem 0; min-height: 2.6em; }
+    button { width: 100%; padding: .5rem; border: 0; border-radius: 8px; background: #1b5e20; color: #fff; cursor: pointer; margin-top: .35rem; }
+    button.secondary { background: #555; }
+  </style>
+</head>
+<body>
+  <h1>🌀 Strudel Session Sync</h1>
+  <div id="status">Loading…</div>
+  <button id="sync">Sync now</button>
+  <button id="sessions" class="secondary">View latest sessions</button>
+  <button id="opts" class="secondary">Configure Supabase…</button>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Strudel Session Sync",
+  "version": "0.2.0",
+  "description": "Backs up and restores your strudel.cc sessions (all saved patterns & latest code) to your own Supabase project as versioned history. You supply your own Supabase URL and anon key - your data goes only to your project.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://strudel.cc/*",
+    "https://warm.strudel.cc/*",
+    "https://*.supabase.co/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://strudel.cc/*", "https://warm.strudel.cc/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Strudel Session Sync"
+  }
+}
