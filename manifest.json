@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Strudel Session Sync",
-  "version": "0.7.1",
-  "description": "Backs up your strudel.cc editor buffer to your own Supabase project as versioned history, storing the share URL and restoring by reopening it. You supply your own Supabase URL and publishable key - your data goes only to your project.",
+  "version": "0.7.2",
+  "description": "Backs up your strudel.cc editor to your own Supabase project as versioned history, with one-click restore of any saved version.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
