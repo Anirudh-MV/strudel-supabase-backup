@@ -16,6 +16,20 @@
     .name { font-weight: 600; }
     .snippet { color: #666; font-family: ui-monospace, monospace; font-size: .8rem; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .expanded td { background: #fafafa; }
+    .expanded .link { display: block; margin-top: .5rem; font-size: .75rem; color: #1b5e20; word-break: break-all; font-family: ui-monospace, monospace; }
+    .count { text-align: right; white-space: nowrap; font-size: .8rem; color: #555; }
+    table.versions { margin-top: .2rem; font-size: .85rem; }
+    table.versions th { cursor: default; color: #666; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; }
+    table.versions th:first-child, table.versions td:first-child { width: 70px; }
+    table.versions th:nth-child(2) { width: 190px; }
+    table.versions th:last-child, table.versions td:last-child { width: 130px; text-align: right; }
+    tr.version td { border-bottom: 1px solid #eee; padding: .35rem .5rem; }
+    .vlabel { font-weight: 600; color: #1b5e20; }
+    .vtime { white-space: nowrap; font-size: .8rem; }
+    .vsnip { font-family: ui-monospace, monospace; font-size: .78rem; color: #666; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    button.restore, button.copy { font-size: .75rem; padding: .2rem .55rem; margin-left: .3rem; border: 0; border-radius: 5px; cursor: pointer; }
+    button.restore { background: #1b5e20; color: #fff; }
+    button.copy { background: #e4e4e4; color: #222; }
     .expanded pre { max-height: 260px; overflow: auto; background: #1a1a24; color: #d8fce8; padding: .7rem; border-radius: 8px; font-size: .78rem; }
     #pager { display: flex; align-items: center; gap: .8rem; margin-top: 1rem; }
     #pager button { padding: .4rem .9rem; border: 0; border-radius: 6px; background: #1b5e20; color: #fff; cursor: pointer; }
@@ -25,7 +39,7 @@
   </style>
 </head>
 <body>
-  <h1>🌀 Latest sessions</h1>
+  <h1>🌀 Sessions &amp; version history</h1>
   <div id="msg" class="muted">Loading…</div>
   <table id="rows"></table>
   <div id="pager" hidden>

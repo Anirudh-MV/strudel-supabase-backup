@@ -1,2 +1,15 @@
 *.zip
 node_modules/
+
+# Personal recovery data: this file holds the user's own strudel patterns recovered
+# from a Chrome profile. It is third-party authored content under CC BY-SA 4.0
+# (see the @by / @license headers inside) and is not part of this project.
+recovered_patterns.json
+
+# Never commit real Supabase credentials - users supply their own via the
+# extension's Settings page, stored in chrome.storage.sync. These patterns are a
+# backstop in case a key is ever pasted into a source file.
+*.env
+.env*
+sb_publishable_*
+sb_secret_*
