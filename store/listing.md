@@ -60,10 +60,14 @@ versioned history, and restores any past version.
 
 | Permission | Justification |
 |---|---|
-| `storage` | Saves the user's own Supabase URL, publishable key, Backup ID, and the autosave toggle. Never leaves the browser. |
-| `activeTab` | Used only so the popup can talk to the strudel.cc tab it was opened from. |
+| `storage` | Saves the user's own Supabase URL, publishable key, Backup ID and autosave toggle. Never leaves the browser. |
 | `https://strudel.cc/*` | The only site the extension acts on. |
 | `https://*.supabase.co/*` | The user's own Supabase project. The subdomain is user-specific and unknown at build time, so it cannot be narrowed. |
+
+`activeTab` was declared in early versions but is not used — the popup uses
+`chrome.tabs.query`, `chrome.tabs.sendMessage` and `chrome.tabs.create`, none of
+which require it, and `tab.url` is readable on strudel.cc via the host permission.
+It was removed in 0.7.3, since the store rejects unnecessary permissions.
 
 ## Privacy practices
 
